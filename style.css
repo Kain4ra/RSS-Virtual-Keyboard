@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  
+  margin: 0 auto;
+  width: 910px;
+}
+
+.key {
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  height: 50px;
+  
+  border: solid 1px black;
+  border-radius: 5px;
+}
+
+.key_active {
+  background-color: beige;
+}
+
+#Backspace {
+  width: 120px;
+}
+
+#Tab {
+  width: 60px;
+}
+
+#CapsLock {
+  width: 115px;
+}
+
+#Enter {
+  width: 115px;
+}
+
+#ShiftLeft {
+  width: 180px;
+}
+
+#ControlLeft {
+  width: 80px;
+}
+
+#Space {
+  width: 360px;
+}
+
+#ControlRight {
+  width: 80px;
+}
+
+#ArrowUp,
+#ArrowLeft,
+#ArrowDown,
+#ArrowRight {
+  text-align: center;
+  padding-top: 10px;
+}
