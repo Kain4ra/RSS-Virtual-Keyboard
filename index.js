@@ -1,6 +1,11 @@
 import keys from './modules/keys.js';
 import Key from './modules/KEY.js';
 
+// Поле ввода
+const inputBox = document.createElement('textarea');
+inputBox.classList.add('input-box');
+document.body.appendChild(inputBox);
+
 const keysName = Object.keys(keys.en);
 
 // Переменные для реализации капса и смены языка
@@ -53,6 +58,53 @@ function keyboardOnScreen(lang, caps) {
 
 keyboardOnScreen(langKeyboard, capsKeyboard);
 
+// Функция ввода
+function setCursorPos(startPos, endPos) {
+  inputBox.selectionStart = startPos;
+  inputBox.selectionEnd = endPos;
+}
+
+function addChar(char) {
+  const startPos = inputBox.selectionStart;
+  const endPos = inputBox.selectionEnd;
+  const { value } = inputBox;
+
+  switch (char) {
+    case 'Backspace': {
+      inputBox.value = value.substring(0, startPos - 1) + value.substring(endPos, value.length);
+      setCursorPos(startPos - 1, startPos - 1);
+      break;
+    }
+    case 'Del': {
+      inputBox.value = value.substring(0, startPos) + value.substring(endPos + 1, value.length);
+      setCursorPos(startPos, startPos);
+      break;
+    }
+    case 'Enter': {
+      inputBox.value = `${value.substring(0, startPos)}\n${value.substring(endPos, value.length)}`;
+      setCursorPos(startPos + 1, startPos + 1);
+      break;
+    }
+    case 'Tab': {
+      inputBox.value = `${value.substring(0, startPos)}\t${value.substring(endPos, value.length)}`;
+      setCursorPos(startPos + 1, startPos + 1);
+      break;
+    }
+    case 'Ctrl':
+    case 'Alt':
+    case 'Meta':
+    case 'Shift':
+    case 'CapsLock': {
+      break;
+    }
+    default: {
+      inputBox.value = value.substring(0, startPos) + char + value.substring(endPos, value.length);
+      setCursorPos(startPos + 1, startPos + 1);
+      break;
+    }
+  }
+}
+
 // Нажитие клавиш на физической клавиатуре
 const capsLockKey = document.getElementById('CapsLock');
 let capsLock = 0;
@@ -77,6 +129,7 @@ document.addEventListener('keyup', (event) => {
   if (event.code === 'CapsLock') return;
   const key = document.getElementById(event.code);
   key.classList.remove('key_active');
+  addChar(key.textContent);
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     capsKeyboard = 0;
     keyboardOnScreen(langKeyboard, capsKeyboard);
@@ -108,4 +161,33 @@ document.addEventListener('keydown', (event) => {
       keyboardOnScreen(langKeyboard, capsKeyboard);
     }
   }
+});
+
+// Клик мышью
+const keyboardChildren = document.querySelectorAll('.key');
+
+function clickDown() {
+  this.classList.add('key_active');
+}
+
+function clickUp() {
+  this.classList.remove('key_active');
+  inputBox.focus();
+  addChar(this.textContent);
+}
+
+function clickLeave() {
+  this.classList.remove('key_active');
+}
+
+keyboardChildren.forEach((element) => {
+  element.addEventListener('mousedown', clickDown);
+});
+
+keyboardChildren.forEach((element) => {
+  element.addEventListener('mouseup', clickUp);
+});
+
+keyboardChildren.forEach((element) => {
+  element.addEventListener('mouseleave', clickLeave);
 });
