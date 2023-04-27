@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  background-color: #39251C;
+  color: #F69B08;
+}
+
+.input-box {
+  display: block;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 900px;
+  height: 240px;
+
+  font-size: 20px;
+
+  background-color: #39251C;
+  border-color: #F69B08;
+  color: #F69B08;
+  outline: none;
+}
+
+.keyboard {
+  display: flex;
+  flex-wrap: wrap;
+  
+  margin: 0 auto;
+  width: 910px;
+}
+
+.key {
+  margin: 5px;
+  padding: 5px;
+  width: 50px;
+  height: 50px;
+  
+  border: solid 1px #F69B08;
+  border-radius: 5px;
+
+  transition: all .1s;
+  user-select: none;
+}
+
+.key_active {
+  background-color: #574132;
+  transform: scale(.9);
+}
+
+#Backspace {
+  width: 120px;
+}
+
+#Tab {
+  width: 60px;
+}
+
+#CapsLock {
+  width: 115px;
+}
+
+#Enter {
+  width: 115px;
+}
+
+#ShiftLeft {
+  width: 180px;
+}
+
+#ControlLeft {
+  width: 80px;
+}
+
+#Space {
+  width: 360px;
+}
+
+#ControlRight {
+  width: 80px;
+}
+
+#ArrowUp,
+#ArrowLeft,
+#ArrowDown,
+#ArrowRight {
+  text-align: center;
+  padding-top: 10px;
+}
+
+.info {
+  margin: 20px;
+
+  text-align: center;
+  letter-spacing: 1px;
+}
