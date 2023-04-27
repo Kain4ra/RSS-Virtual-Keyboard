@@ -15,7 +15,7 @@ let langKeyboard = 'en';
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
 
-// Цикл создания клавиш и присвоения им экземпляра объекта
+// Цикл создания клавиш и присвоения им экземпляра класса
 for (let i = 0; i < keysName.length; i += 1) {
   const keyElement = document.createElement('div');
   keyElement.classList.add('key');
@@ -137,29 +137,35 @@ document.addEventListener('keyup', (event) => {
 });
 
 // Нажатие CapsLock
-document.addEventListener('keydown', (event) => {
-  if (event.code === 'CapsLock') {
-    capsLock = capsLock === 0 ? 1 : 0;
-    if (capsLock === 1) {
-      capsLockKey.classList.add('key_active');
-      if (langKeyboard === 'en') {
-        for (let i = 0; i < keyboard.children.length; i += 1) {
-          if (/Key[A-Z]/.test(keyboard.children[i].id)) {
-            keyboard.children[i].textContent = keyboard.children[i].key.en[capsLock];
-          }
-        }
-      } else {
-        const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
-        for (let i = 0; i < keyboard.children.length; i += 1) {
-          if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
-            keyboard.children[i].textContent = keyboard.children[i].key.ru[capsLock];
-          }
+function capsFunction() {
+  capsLock = capsLock === 0 ? 1 : 0;
+  if (capsLock === 1) {
+    capsLockKey.classList.add('key_active');
+    if (langKeyboard === 'en') {
+      for (let i = 0; i < keyboard.children.length; i += 1) {
+        if (/Key[A-Z]/.test(keyboard.children[i].id)) {
+          keyboard.children[i].textContent = keyboard.children[i].key.en[capsLock];
         }
       }
     } else {
-      capsLockKey.classList.remove('key_active');
-      keyboardOnScreen(langKeyboard, capsKeyboard);
+      const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+      for (let i = 0; i < keyboard.children.length; i += 1) {
+        if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
+          keyboard.children[i].textContent = keyboard.children[i].key.ru[capsLock];
+        }
+      }
     }
+  } else {
+    capsLockKey.classList.remove('key_active');
+    keyboardOnScreen(langKeyboard, capsKeyboard);
+  }
+}
+
+capsLockKey.addEventListener('click', capsFunction);
+
+document.addEventListener('keydown', (event) => {
+  if (event.code === 'CapsLock') {
+    capsFunction();
   }
 });
 
@@ -168,16 +174,28 @@ const keyboardChildren = document.querySelectorAll('.key');
 
 function clickDown() {
   this.classList.add('key_active');
+  if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
+    capsKeyboard = 1;
+    keyboardOnScreen(langKeyboard, capsKeyboard);
+  }
 }
 
 function clickUp() {
   this.classList.remove('key_active');
   inputBox.focus();
   addChar(this.textContent);
+  if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
+    capsKeyboard = 0;
+    keyboardOnScreen(langKeyboard, capsKeyboard);
+  }
 }
 
 function clickLeave() {
-  this.classList.remove('key_active');
+  if (this !== capsLockKey) this.classList.remove('key_active');
+  if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
+    capsKeyboard = 0;
+    keyboardOnScreen(langKeyboard, capsKeyboard);
+  }
 }
 
 keyboardChildren.forEach((element) => {
