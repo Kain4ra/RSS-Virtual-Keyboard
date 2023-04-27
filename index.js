@@ -127,6 +127,22 @@ document.addEventListener('keydown', (event) => {
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     capsKeyboard = 1;
     keyboardOnScreen(langKeyboard, capsKeyboard);
+    if (capsLockKey.classList.contains('key_active')) {
+      if (langKeyboard === 'en') {
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toLowerCase();
+          }
+        }
+      } else {
+        const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toLowerCase();
+          }
+        }
+      }
+    }
   }
   if (event.shiftKey && (event.code === 'AltLeft' || event.code === 'AltRight')) {
     langKeyboard = langKeyboard === 'en' ? 'ru' : 'en';
@@ -144,6 +160,22 @@ document.addEventListener('keyup', (event) => {
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     capsKeyboard = 0;
     keyboardOnScreen(langKeyboard, capsKeyboard);
+    if (capsLockKey.classList.contains('key_active')) {
+      if (langKeyboard === 'en') {
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toUpperCase();
+          }
+        }
+      } else {
+        const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toUpperCase();
+          }
+        }
+      }
+    }
   }
 });
 
@@ -188,6 +220,22 @@ function clickDown() {
   if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
     capsKeyboard = 1;
     keyboardOnScreen(langKeyboard, capsKeyboard);
+    if (capsLockKey.classList.contains('key_active')) {
+      if (langKeyboard === 'en') {
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toLowerCase();
+          }
+        }
+      } else {
+        const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toLowerCase();
+          }
+        }
+      }
+    }
   }
 }
 
@@ -198,12 +246,28 @@ function clickUp() {
   if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
     capsKeyboard = 0;
     keyboardOnScreen(langKeyboard, capsKeyboard);
+    if (capsLockKey.classList.contains('key_active')) {
+      if (langKeyboard === 'en') {
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toUpperCase();
+          }
+        }
+      } else {
+        const arr = ['Backquote', 'BracketLeft', 'BracketRight', 'Semicolon', 'Quote', 'Comma', 'Period'];
+        for (let i = 0; i < keyboard.children.length; i += 1) {
+          if (/Key[A-Z]/.test(keyboard.children[i].id) || arr.includes(keyboard.children[i].id)) {
+            keyboard.children[i].textContent = keyboard.children[i].textContent.toUpperCase();
+          }
+        }
+      }
+    }
   }
 }
 
 function clickLeave() {
   if (this !== capsLockKey) this.classList.remove('key_active');
-  if (this.id === 'ShiftLeft' || this.id === 'ShiftRight') {
+  if (!capsLockKey.classList.contains('key_active') && (this.id === 'ShiftLeft' || this.id === 'ShiftRight')) {
     capsKeyboard = 0;
     keyboardOnScreen(langKeyboard, capsKeyboard);
   }
