@@ -58,6 +58,17 @@ function keyboardOnScreen(lang, caps) {
 
 keyboardOnScreen(langKeyboard, capsKeyboard);
 
+// Сохранение языка
+window.addEventListener('beforeunload', () => {
+  localStorage.setItem('lang', langKeyboard);
+});
+window.addEventListener('load', () => {
+  if (localStorage.getItem('lang') !== langKeyboard) {
+    langKeyboard = 'ru';
+    keyboardOnScreen(langKeyboard, capsKeyboard);
+  }
+});
+
 // Функция ввода
 function setCursorPos(startPos, endPos) {
   inputBox.selectionStart = startPos;
