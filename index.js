@@ -103,7 +103,7 @@ function addChar(char) {
     }
     case 'Ctrl':
     case 'Alt':
-    case 'Meta':
+    case 'Win':
     case 'Shift':
     case 'CapsLock': {
       break;
@@ -220,3 +220,19 @@ keyboardChildren.forEach((element) => {
 keyboardChildren.forEach((element) => {
   element.addEventListener('mouseleave', clickLeave);
 });
+
+// Вывод информации
+const title = document.createElement('h1');
+title.classList.add('info');
+title.textContent = 'Виртуальная клавиатура';
+document.body.prepend(title);
+
+const infoOS = document.createElement('h2');
+infoOS.classList.add('info');
+infoOS.textContent = 'Клавиатура создана в операционной системе Windows';
+document.body.appendChild(infoOS);
+
+const infoChahgeLang = document.createElement('h2');
+infoChahgeLang.classList.add('info');
+infoChahgeLang.textContent = 'Для переключения языка комбинация: Shift + Alt';
+document.body.appendChild(infoChahgeLang);
